@@ -1,0 +1,240 @@
+
+name: Monthly Climate Modes Update
+
+# ============================================================
+# TRÓPICO Climate Modes Monitor
+# Automatic Monthly Update
+#
+# Author: Alejandro Jaramillo-Moreno
+# ORCID: 0000-0002-4175-7726
+# TRÓPICO Research Group | ICAyCC, UNAM
+#
+# Schedule: 15th of every month
+# Time: 09:23 America/Mexico_City
+# ============================================================
+
+on:
+  schedule:
+    - cron: "23 9 15 * *"
+      timezone: "America/Mexico_City"
+
+  workflow_dispatch:
+
+permissions:
+  contents: write
+  pages: write
+  id-token: write
+
+concurrency:
+  group: climate-modes-monthly-update
+  cancel-in-progress: false
+
+jobs:
+
+  update:
+
+    name: Update Climate Modes Monitor
+
+    runs-on: ubuntu-24.04
+
+    timeout-minutes: 120
+
+    environment:
+      name: github-pages
+      url: ${{ steps.deployment.outputs.page_url }}
+
+    steps:
+
+      # ------------------------------------------------------
+      # Checkout repository
+      # ------------------------------------------------------
+
+      - name: Checkout repository
+        uses: actions/checkout@v4
+
+      # ------------------------------------------------------
+      # Python environment
+      # ------------------------------------------------------
+
+      - name: Set up Python
+        uses: actions/setup-python@v5
+        with:
+          python-version: "3.11"
+
+      - name: Install scientific dependencies
+        run: |
+          python -m pip install --upgrade pip
+
+          python -m pip install \
+            numpy \
+            pandas \
+            scipy \
+            matplotlib \
+            xarray \
+            netCDF4 \
+            h5netcdf \
+            cartopy
+
+      # ------------------------------------------------------
+      # Execute all numbered processing scripts
+      # ------------------------------------------------------
+
+      - name: Run climate modes processing pipeline
+        shell: bash
+        env:
+          MPLBACKEND: Agg
+        run: |
+          set -euo pipefail
+
+          scripts=(scripts/[0-9][0-9]_*.py)
+
+          if [ ! -f "${scripts[0]}" ]; then
+            echo "ERROR: No numbered Python scripts found"
+            exit 1
+          fi
+
+          echo "Starting TRÓPICO Climate Modes Monitor"
+          echo ""
+
+          for script in "${scripts[@]}"; do
+
+            echo "========================================"
+            echo "Running: $script"
+            echo "========================================"
+
+            python "$script"
+
+          done
+
+          echo ""
+          echo "Climate processing completed"
+
+      # ------------------------------------------------------
+      # Validate web products
+      # ------------------------------------------------------
+
+      - name: Verify JSON files and figures
+        run: |
+          python - <<'PY'
+          from pathlib import Path
+          import json
+
+          modes = {
+              "enso": [
+                  "enso_current_conditions",
+                  "enso_historical_evolution",
+                  "enso_roni_vs_oni",
+              ],
+              "qbo": [
+                  "qbo_current_conditions",
+                  "qbo_historical_evolution",
+                  "qbo_time_height",
+              ],
+              "pdo": [
+                  "pdo_current_conditions",
+                  "pdo_historical_evolution",
+                  "pdo_spatial_pattern",
+              ],
+              "amv": [
+                  "amv_current_conditions",
+                  "amv_historical_evolution",
+                  "amv_sst_anomalies",
+              ],
+              "iod": [
+                  "iod_current_conditions",
+                  "iod_historical_evolution",
+                  "iod_sst_anomalies",
+              ],
+          }
+
+          for mode, figures in modes.items():
+
+              filename = Path(
+                  f"docs/data/{mode}_status.json"
+              )
+
+              if not filename.is_file():
+                  raise FileNotFoundError(filename)
+
+              payload = json.loads(
+                  filename.read_text(encoding="utf-8")
+              )
+
+              if not payload.get("metrics"):
+                  raise ValueError(
+                      f"Missing metrics: {mode}"
+                  )
+
+              print(f"OK JSON: {mode}")
+
+              for figure in figures:
+
+                  for extension in ("png", "svg"):
+
+                      path = Path(
+                          f"docs/figures/"
+                          f"{figure}.{extension}"
+                      )
+
+                      if not path.is_file():
+                          raise FileNotFoundError(path)
+
+                      if path.stat().st_size == 0:
+                          raise ValueError(
+                              f"Empty figure: {path}"
+                          )
+
+                  print(f"OK FIGURE: {figure}")
+
+          if not Path("docs/index.html").is_file():
+              raise FileNotFoundError(
+                  "docs/index.html"
+              )
+
+          print("")
+          print("All web products verified")
+          PY
+
+      # ------------------------------------------------------
+      # Commit only web outputs
+      # ------------------------------------------------------
+
+      - name: Commit updated products
+        shell: bash
+        run: |
+          set -euo pipefail
+
+          git config user.name "github-actions[bot]"
+          git config user.email \
+            "41898282+github-actions[bot]@users.noreply.github.com"
+
+          git add -A -- docs/data docs/figures
+
+          if git diff --cached --quiet; then
+
+            echo "No changes in web products"
+
+          else
+
+            git commit -m \
+              "Monthly climate modes update - $(date -u +%Y-%m-%d)"
+
+            git push origin HEAD:main
+
+          fi
+
+      # ------------------------------------------------------
+      # Deploy GitHub Pages directly
+      # ------------------------------------------------------
+
+      - name: Configure GitHub Pages
+        uses: actions/configure-pages@v5
+
+      - name: Upload Pages artifact
+        uses: actions/upload-pages-artifact@v4
+        with:
+          path: docs
+
+      - name: Deploy GitHub Pages
+        id: deployment
+        uses: actions/deploy-pages@v4
