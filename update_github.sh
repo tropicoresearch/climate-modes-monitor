@@ -12,10 +12,6 @@
 
 set -euo pipefail
 
-# ------------------------------------------------------------
-# Configuration
-# ------------------------------------------------------------
-
 ROOT="$(cd "$(dirname "${BASH_SOURCE[0]}")" && pwd)"
 PYTHON_BIN="${PYTHON:-python}"
 
@@ -23,7 +19,7 @@ cd "$ROOT"
 
 echo ""
 echo "============================================================"
-echo " TRÓPICO | CLIMATE MODES MONITOR"
+echo " TRÓPICO CLIMATE MODES MONITOR"
 echo " Monthly Update and GitHub Publication"
 echo "============================================================"
 echo ""
@@ -32,20 +28,20 @@ echo ""
 # Verify environment
 # ------------------------------------------------------------
 
-if ! command -v "$PYTHON_BIN" >/dev/null 2>&1; then
-    echo "ERROR: Python interpreter not found: $PYTHON_BIN"
+command -v "$PYTHON_BIN" >/dev/null 2>&1 || {
+    echo "ERROR: Python interpreter not found."
     exit 1
-fi
+}
 
-if ! git rev-parse --is-inside-work-tree >/dev/null 2>&1; then
-    echo "ERROR: This directory is not a Git repository."
+git rev-parse --is-inside-work-tree >/dev/null 2>&1 || {
+    echo "ERROR: Not a Git repository."
     exit 1
-fi
+}
 
-if ! git remote get-url origin >/dev/null 2>&1; then
-    echo "ERROR: Git remote 'origin' is not configured."
+git remote get-url origin >/dev/null 2>&1 || {
+    echo "ERROR: Git remote 'origin' is missing."
     exit 1
-fi
+}
 
 BRANCH="$(git branch --show-current)"
 
@@ -55,80 +51,68 @@ if [ -z "$BRANCH" ]; then
 fi
 
 echo "Repository: $ROOT"
-echo "Branch:     $BRANCH"
 echo "Python:     $PYTHON_BIN"
+echo "Branch:     $BRANCH"
 echo ""
 
 # ------------------------------------------------------------
-# ENSO | Download and prepare indices
+# Processing pipeline
 # ------------------------------------------------------------
 
-echo "============================================================"
-echo "[1/5] ENSO | Downloading indices"
-echo "============================================================"
+SCRIPTS=(
+    # ENSO
+    "scripts/01_download_enso_indices.py"
+    "scripts/02_plot_enso_current_conditions.py"
+    "scripts/03_plot_enso_historical_evolution.py"
+    "scripts/04_plot_enso_roni_vs_oni.py"
+    "scripts/05_export_enso_web_data.py"
 
-"$PYTHON_BIN" scripts/01_download_enso_indices.py
+    # QBO
+    "scripts/06_download_qbo_indices.py"
+    "scripts/07_plot_qbo_current_conditions.py"
+    "scripts/08_plot_qbo_historical_evolution.py"
+    "scripts/09_plot_qbo_time_height.py"
+    "scripts/10_export_qbo_web_data.py"
+)
 
-# ------------------------------------------------------------
-# ENSO | Current conditions
-# ------------------------------------------------------------
+TOTAL=${#SCRIPTS[@]}
+COUNT=0
 
-echo "============================================================"
-echo "[2/5] ENSO | Current conditions"
-echo "============================================================"
+for SCRIPT in "${SCRIPTS[@]}"; do
 
-"$PYTHON_BIN" scripts/02_plot_enso_current_conditions.py
+    COUNT=$((COUNT + 1))
 
-# ------------------------------------------------------------
-# ENSO | Historical evolution
-# ------------------------------------------------------------
+    echo ""
+    echo "============================================================"
+    echo " [$COUNT/$TOTAL] $SCRIPT"
+    echo "============================================================"
+    echo ""
 
-echo "============================================================"
-echo "[3/5] ENSO | Historical evolution"
-echo "============================================================"
+    if [ ! -f "$SCRIPT" ]; then
+        echo "ERROR: Missing script: $SCRIPT"
+        exit 1
+    fi
 
-"$PYTHON_BIN" scripts/03_plot_enso_historical_evolution.py
+    "$PYTHON_BIN" "$SCRIPT"
 
-# ------------------------------------------------------------
-# ENSO | RONI vs. ONI
-# ------------------------------------------------------------
-
-echo "============================================================"
-echo "[4/5] ENSO | RONI vs. ONI"
-echo "============================================================"
-
-"$PYTHON_BIN" scripts/04_plot_enso_roni_vs_oni.py
-
-# ------------------------------------------------------------
-# ENSO | Export web data
-# ------------------------------------------------------------
-
-echo "============================================================"
-echo "[5/5] ENSO | Exporting website data"
-echo "============================================================"
-
-"$PYTHON_BIN" scripts/05_export_enso_web_data.py
+done
 
 # ------------------------------------------------------------
-# GitHub | Stage all changes
+# GitHub publication
 # ------------------------------------------------------------
 
+echo ""
 echo "============================================================"
-echo " GitHub | Preparing publication"
+echo " Preparing GitHub publication"
 echo "============================================================"
+echo ""
 
 git add -A
-
-echo ""
 git status --short
-echo ""
-
-# ------------------------------------------------------------
-# GitHub | Commit changes
-# ------------------------------------------------------------
 
 if git diff --cached --quiet; then
 
+    echo ""
     echo "No new changes to commit."
 
 else
@@ -139,27 +123,19 @@ else
 
 fi
 
-# ------------------------------------------------------------
-# GitHub | Push
-# ------------------------------------------------------------
-
 echo ""
 echo "============================================================"
-echo " GitHub | Pushing changes"
+echo " Publishing to GitHub"
 echo "============================================================"
+echo ""
 
 git push -u origin "$BRANCH"
-
-# ------------------------------------------------------------
-# Completed
-# ------------------------------------------------------------
 
 echo ""
 echo "============================================================"
 echo " TRÓPICO CLIMATE MODES MONITOR"
-echo " Update completed successfully!"
+echo " Update completed successfully"
 echo "============================================================"
 echo ""
-echo "Website:"
 echo "https://tropicoresearch.github.io/climate-modes-monitor/"
 echo ""

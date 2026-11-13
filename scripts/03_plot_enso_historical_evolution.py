@@ -57,6 +57,7 @@ plt.rcParams.update({
     "ytick.labelsize": 9,
     "savefig.facecolor": "white",
     "svg.fonttype": "none",
+    "svg.hashsalt": "tropico-climate-modes-monitor",
 })
 
 
@@ -567,7 +568,8 @@ fig.savefig(
 
 fig.savefig(
     svg_file,
-    facecolor="white"
+    facecolor="white",
+    metadata={"Date": None}
 )
 
 plt.close(fig)
