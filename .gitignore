@@ -25,3 +25,6 @@ venv/
 *.tmp
 *.log
 *~
+
+# Cached ERSSTv6 monthly fields for PDO regression
+data/pdo/raw/ersst_v6/

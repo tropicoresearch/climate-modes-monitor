@@ -17,31 +17,20 @@ PYTHON_BIN="${PYTHON:-python}"
 
 cd "$ROOT"
 
-echo ""
-echo "============================================================"
-echo " TRÓPICO CLIMATE MODES MONITOR"
-echo " Monthly Update and GitHub Publication"
-echo "============================================================"
-echo ""
-
-# ------------------------------------------------------------
-# Verify environment
-# ------------------------------------------------------------
-
-command -v "$PYTHON_BIN" >/dev/null 2>&1 || {
+if ! command -v "$PYTHON_BIN" >/dev/null 2>&1; then
     echo "ERROR: Python interpreter not found."
     exit 1
-}
+fi
 
-git rev-parse --is-inside-work-tree >/dev/null 2>&1 || {
+if ! git rev-parse --is-inside-work-tree >/dev/null 2>&1; then
     echo "ERROR: Not a Git repository."
     exit 1
-}
+fi
 
-git remote get-url origin >/dev/null 2>&1 || {
-    echo "ERROR: Git remote 'origin' is missing."
+if ! git remote get-url origin >/dev/null 2>&1; then
+    echo "ERROR: Git remote origin is missing."
     exit 1
-}
+fi
 
 BRANCH="$(git branch --show-current)"
 
@@ -50,16 +39,12 @@ if [ -z "$BRANCH" ]; then
     exit 1
 fi
 
-echo "Repository: $ROOT"
-echo "Python:     $PYTHON_BIN"
-echo "Branch:     $BRANCH"
-echo ""
-
 # ------------------------------------------------------------
 # Processing pipeline
 # ------------------------------------------------------------
 
 SCRIPTS=(
+
     # ENSO
     "scripts/01_download_enso_indices.py"
     "scripts/02_plot_enso_current_conditions.py"
@@ -73,20 +58,41 @@ SCRIPTS=(
     "scripts/08_plot_qbo_historical_evolution.py"
     "scripts/09_plot_qbo_time_height.py"
     "scripts/10_export_qbo_web_data.py"
+
+    # PDO
+    "scripts/11_download_pdo_index.py"
+    "scripts/12_plot_pdo_current_conditions.py"
+    "scripts/13_plot_pdo_historical_evolution.py"
+    "scripts/14_plot_pdo_spatial_pattern.py"
+    "scripts/15_export_pdo_web_data.py"
+
 )
 
 TOTAL=${#SCRIPTS[@]}
-COUNT=0
 
-for SCRIPT in "${SCRIPTS[@]}"; do
+echo ""
+echo "============================================================"
+echo " TRÓPICO | CLIMATE MODES MONITOR"
+echo " Monthly Update and GitHub Publication"
+echo "============================================================"
+echo ""
+echo "Repository: $ROOT"
+echo "Branch:     $BRANCH"
+echo "Python:     $PYTHON_BIN"
+echo ""
 
-    COUNT=$((COUNT + 1))
+# ------------------------------------------------------------
+# Execute Python scripts
+# ------------------------------------------------------------
+
+for i in "${!SCRIPTS[@]}"; do
+
+    SCRIPT="${SCRIPTS[$i]}"
 
     echo ""
     echo "============================================================"
-    echo " [$COUNT/$TOTAL] $SCRIPT"
+    echo " [$((i + 1))/$TOTAL] $SCRIPT"
     echo "============================================================"
-    echo ""
 
     if [ ! -f "$SCRIPT" ]; then
         echo "ERROR: Missing script: $SCRIPT"
@@ -103,16 +109,17 @@ done
 
 echo ""
 echo "============================================================"
-echo " Preparing GitHub publication"
+echo " GitHub | Preparing publication"
 echo "============================================================"
-echo ""
 
 git add -A
+
+echo ""
 git status --short
+echo ""
 
 if git diff --cached --quiet; then
 
-    echo ""
     echo "No new changes to commit."
 
 else
@@ -125,16 +132,15 @@ fi
 
 echo ""
 echo "============================================================"
-echo " Publishing to GitHub"
+echo " GitHub | Publishing"
 echo "============================================================"
-echo ""
 
 git push -u origin "$BRANCH"
 
 echo ""
 echo "============================================================"
 echo " TRÓPICO CLIMATE MODES MONITOR"
-echo " Update completed successfully"
+echo " Update completed successfully!"
 echo "============================================================"
 echo ""
 echo "https://tropicoresearch.github.io/climate-modes-monitor/"
