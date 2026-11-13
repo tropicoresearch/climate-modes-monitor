@@ -7,7 +7,7 @@
   <meta name="viewport" content="width=device-width, initial-scale=1">
 
   <meta name="description"
-        content="Monitor major modes of climate variability through updated indices and scientific visualizations from the TRÓPICO Research Group.">
+        content="Monitoring major modes of climate variability through updated indices and scientific visualizations.">
 
   <meta name="theme-color" content="#f7f9fb">
 
@@ -21,7 +21,7 @@
       --red: #c64b4b;
       --border: #e1e8ee;
       --wash: #f6f9fb;
-      --white: #fff;
+      --white: #ffffff;
       --shadow: 0 14px 38px rgba(22, 50, 76, .055);
     }
 
@@ -60,7 +60,7 @@
     /* Header */
 
     .site-header {
-      background: #fff;
+      background: white;
       border-bottom: 1px solid var(--border);
     }
 
@@ -119,7 +119,7 @@
     .nav {
       display: flex;
       align-items: center;
-      gap: 27px;
+      gap: 25px;
       flex-wrap: wrap;
     }
 
@@ -141,7 +141,7 @@
         120deg,
         #f3f8fb 0%,
         #f8fbfd 60%,
-        #fff 100%
+        #ffffff 100%
       );
       border-bottom: 1px solid var(--border);
     }
@@ -168,7 +168,6 @@
       line-height: 1.07;
       letter-spacing: -.045em;
       margin: 0 0 22px;
-      max-width: 740px;
       font-weight: 750;
     }
 
@@ -195,22 +194,13 @@
       background: rgba(255, 255, 255, .65);
     }
 
-    /* ENSO snapshot */
-
     .snapshot {
       padding: 28px 30px 23px;
-      background: #fff;
+      background: white;
       border: 1px solid var(--border);
       border-radius: 16px;
       box-shadow: var(--shadow);
       min-width: 0;
-    }
-
-    .snapshot-top {
-      display: flex;
-      justify-content: space-between;
-      gap: 12px;
-      align-items: center;
     }
 
     .snapshot-kicker {
@@ -221,17 +211,8 @@
       text-transform: uppercase;
     }
 
-    .live-dot {
-      width: 7px;
-      height: 7px;
-      background: #3b987b;
-      border-radius: 50%;
-      display: inline-block;
-      margin-right: 6px;
-    }
-
     .snapshot-meta {
-      margin: 11px 0 0;
+      margin: 12px 0 0;
       font-size: 14px;
       color: var(--muted);
     }
@@ -241,7 +222,7 @@
       font-weight: 750;
       letter-spacing: -.04em;
       line-height: 1.18;
-      margin: 4px 0 0;
+      margin: 4px 0;
       font-variant-numeric: tabular-nums;
     }
 
@@ -268,9 +249,9 @@
 
     /* Sections */
 
-    section.content-section {
-      padding: 73px 0 0;
-      scroll-margin-top: 28px;
+    .content-section {
+      padding-top: 74px;
+      scroll-margin-top: 25px;
     }
 
     .section-heading {
@@ -291,7 +272,7 @@
     .section-heading p {
       color: var(--muted);
       margin: 9px 0 0;
-      max-width: 680px;
+      max-width: 720px;
       font-size: 14px;
     }
 
@@ -314,7 +295,7 @@
       border: 1px solid var(--border);
       border-radius: 13px;
       padding: 20px 19px;
-      background: var(--white);
+      background: white;
       display: flex;
       flex-direction: column;
     }
@@ -322,7 +303,7 @@
     .mode.active {
       border-color: #b7d6e6;
       background: linear-gradient(
-        180deg, #f6fbfe 0%, #fff 70%
+        180deg, #f6fbfe 0%, white 70%
       );
       box-shadow: var(--shadow);
     }
@@ -331,7 +312,7 @@
       color: var(--muted);
       font-size: 10px;
       text-transform: uppercase;
-      letter-spacing: .12em;
+      letter-spacing: .10em;
       font-weight: 800;
     }
 
@@ -375,7 +356,7 @@
       font-weight: 650;
     }
 
-    /* ENSO module */
+    /* Scientific modules */
 
     .module-top {
       padding: 28px 31px;
@@ -421,6 +402,10 @@
       gap: 11px;
     }
 
+    .metrics.two {
+      grid-template-columns: repeat(2, minmax(0, 1fr));
+    }
+
     .metric {
       background: white;
       border-radius: 11px;
@@ -448,6 +433,12 @@
       font-size: 12px;
     }
 
+    .metric-regime {
+      font-size: 11px;
+      font-weight: 750;
+      margin-top: 5px;
+    }
+
     .reading-note {
       font-size: 12px;
       color: var(--muted);
@@ -462,6 +453,18 @@
 
     .figures {
       margin-top: 34px;
+      scroll-margin-top: 25px;
+    }
+
+    .figures h3 {
+      font-size: 21px;
+      margin: 0 0 8px;
+    }
+
+    .figures-description {
+      font-size: 13px;
+      color: var(--muted);
+      margin: 0 0 18px;
     }
 
     .tabs {
@@ -536,7 +539,7 @@
 
     .info-grid {
       display: grid;
-      grid-template-columns: 1.2fr 1fr;
+      grid-template-columns: 1fr 1fr;
       gap: 24px;
     }
 
@@ -606,10 +609,6 @@
       .modes {
         grid-template-columns: repeat(3, minmax(0, 1fr));
       }
-
-      .mode {
-        min-height: 203px;
-      }
     }
 
     @media (max-width: 730px) {
@@ -649,11 +648,9 @@
         grid-template-columns: repeat(2, minmax(0, 1fr));
       }
 
-      .mode {
-        min-height: 190px;
-      }
-
-      .metrics {
+      .metrics,
+      .metrics.two,
+      .info-grid {
         grid-template-columns: 1fr;
       }
 
@@ -661,26 +658,18 @@
         padding: 21px;
       }
 
-      .module-head {
-        flex-direction: column;
-      }
-
-      .info-grid {
-        grid-template-columns: 1fr;
-      }
-
-      .section-heading {
-        align-items: start;
-        flex-direction: column;
-      }
-
+      .module-head,
+      .section-heading,
       .figure-footer {
-        align-items: start;
         flex-direction: column;
-        gap: 7px;
+        align-items: flex-start;
       }
 
-      section.content-section {
+      .section-note {
+        white-space: normal;
+      }
+
+      .content-section {
         padding-top: 54px;
       }
     }
@@ -700,10 +689,6 @@
 
       .snapshot {
         padding: 22px;
-      }
-
-      .tab {
-        padding: 10px 12px;
       }
     }
 
@@ -737,8 +722,8 @@
       <nav class="nav" aria-label="Main navigation">
         <a href="#overview">Overview</a>
         <a href="#enso">ENSO</a>
-        <a href="#figures">Figures</a>
-        <a href="#methods">Data &amp; Methods</a>
+        <a href="#qbo">QBO</a>
+        <a href="#methods">Methods</a>
       </nav>
 
     </div>
@@ -753,6 +738,7 @@
       <div class="shell hero-layout">
 
         <div>
+
           <p class="eyebrow">
             Climate observation / Large-scale variability
           </p>
@@ -762,9 +748,9 @@
           <p class="hero-description">
             Monitoring large-scale climate variability
             across the ocean–atmosphere system.
-            Explore the current state and recent evolution
-            of major climate modes through updated indices
-            and scientific visualizations.
+            Explore major climate modes through updated
+            indices, historical records, and scientific
+            visualizations.
           </p>
 
           <div class="hero-tags">
@@ -772,18 +758,14 @@
             <span class="tag">Monthly updates</span>
             <span class="tag">Scientific data</span>
           </div>
+
         </div>
 
-        <aside class="snapshot"
-               aria-label="Latest RONI observation">
+        <aside class="snapshot" aria-label="Latest RONI observation">
 
-          <div class="snapshot-top">
-            <span class="snapshot-kicker">ENSO / RONI</span>
-            <span class="snapshot-kicker">
-              <span class="live-dot"></span>
-              Latest data
-            </span>
-          </div>
+          <span class="snapshot-kicker">
+            ENSO / Latest RONI
+          </span>
 
           <p class="snapshot-meta">
             Relative Oceanic Niño Index
@@ -801,20 +783,21 @@
                id="roni-spark"
                viewBox="0 0 320 98"
                role="img"
-               aria-label="RONI evolution over recent observations">
+               aria-label="Recent RONI evolution">
           </svg>
 
           <p class="snapshot-note" id="roni-condition">
-            The RONI is a three-month index of relative
-            tropical Pacific SST anomalies.
+            Three-month relative tropical Pacific
+            SST index.
           </p>
 
         </aside>
+
       </div>
     </section>
 
 
-    <!-- Climate Modes Overview -->
+    <!-- Overview -->
 
     <section class="content-section shell" id="overview">
 
@@ -824,16 +807,19 @@
           <h2>Explore climate modes</h2>
           <p>
             Five selected modes spanning the tropical oceans,
-            North Pacific, North Atlantic, and equatorial stratosphere.
+            North Pacific, North Atlantic, and equatorial
+            stratosphere.
           </p>
         </div>
 
         <span class="section-note">
-          One module available · Four planned
+          Two active modules · Three planned
         </span>
       </div>
 
       <div class="modes">
+
+        <!-- ENSO -->
 
         <article class="mode active">
           <span class="mode-type">Tropical Pacific</span>
@@ -841,7 +827,7 @@
           <p>El Niño–Southern Oscillation</p>
 
           <div class="mode-value" id="overview-roni">—</div>
-          <div class="mode-date" id="overview-period">
+          <div class="mode-date" id="overview-enso-period">
             Latest RONI
           </div>
 
@@ -850,12 +836,24 @@
           </a>
         </article>
 
-        <article class="mode">
+        <!-- QBO -->
+
+        <article class="mode active">
           <span class="mode-type">Equatorial stratosphere</span>
           <h3>QBO</h3>
           <p>Quasi-Biennial Oscillation</p>
-          <span class="mode-planned">Coming soon</span>
+
+          <div class="mode-value" id="overview-qbo">—</div>
+          <div class="mode-date" id="overview-qbo-period">
+            Latest wind at 30 hPa
+          </div>
+
+          <a class="mode-link" href="#qbo">
+            Explore QBO ↗
+          </a>
         </article>
+
+        <!-- Planned modules -->
 
         <article class="mode">
           <span class="mode-type">North Pacific</span>
@@ -882,17 +880,18 @@
     </section>
 
 
-    <!-- ENSO Module -->
+    <!-- ENSO -->
 
     <section class="content-section shell" id="enso">
 
       <div class="section-heading">
         <div>
-          <p class="eyebrow">02 / Active monitoring</p>
+          <p class="eyebrow">02 / Tropical Pacific</p>
           <h2>El Niño–Southern Oscillation</h2>
           <p>
-            A coupled pattern of tropical Pacific ocean–atmosphere
-            variability with far-reaching climate teleconnections.
+            A coupled pattern of tropical Pacific
+            ocean–atmosphere variability with far-reaching
+            climate teleconnections.
           </p>
         </div>
       </div>
@@ -903,12 +902,14 @@
           <div>
             <h3>Current ENSO indices</h3>
             <p>
-              The latest available observations from NOAA CPC.
+              Latest available observations.
               Each indicator retains its own observation period.
             </p>
           </div>
 
-          <span class="source-pill">NOAA CPC · ERSSTv6</span>
+          <span class="source-pill">
+            NOAA CPC · ERSSTv6
+          </span>
         </div>
 
         <div class="metrics">
@@ -935,38 +936,32 @@
 
         <p class="reading-note">
           <strong>Interpretation:</strong>
-          A threshold crossing in an individual index is not,
-          by itself, an official ENSO episode classification.
-          Persistence and supporting atmospheric conditions matter.
+          An individual index threshold crossing
+          does not independently establish an ENSO episode.
+          Persistence and ocean–atmosphere coupling matter.
         </p>
 
       </div>
 
+      <div class="figures" id="enso-figures">
 
-      <!-- Scientific Figures -->
+        <h3>ENSO scientific figures</h3>
 
-      <div class="figures" id="figures">
-
-        <div class="section-heading">
-          <div>
-            <p class="eyebrow">03 / Visualizations</p>
-            <h2>Scientific figures</h2>
-            <p>
-              Explore recent observations, the historical record,
-              and methodological differences between indices.
-            </p>
-          </div>
-        </div>
+        <p class="figures-description">
+          Explore current conditions, historical variability,
+          and differences between RONI and ONI.
+        </p>
 
         <div class="tabs"
              role="tablist"
-             aria-label="ENSO figure selection">
+             aria-label="ENSO figure selection"
+             data-mode="enso">
 
           <button class="tab"
                   type="button"
                   role="tab"
-                  id="tab-current"
-                  aria-controls="figure-panel"
+                  id="enso-tab-current"
+                  aria-controls="enso-figure-panel"
                   aria-selected="true"
                   data-figure="current">
             Current conditions
@@ -975,44 +970,205 @@
           <button class="tab"
                   type="button"
                   role="tab"
-                  id="tab-historical"
-                  aria-controls="figure-panel"
+                  id="enso-tab-historical"
+                  aria-controls="enso-figure-panel"
                   aria-selected="false"
-                  data-figure="historical">
+                  data-figure="historical"
+                  tabindex="-1">
             Historical evolution
           </button>
 
           <button class="tab"
                   type="button"
                   role="tab"
-                  id="tab-comparison"
-                  aria-controls="figure-panel"
+                  id="enso-tab-comparison"
+                  aria-controls="enso-figure-panel"
                   aria-selected="false"
-                  data-figure="comparison">
+                  data-figure="comparison"
+                  tabindex="-1">
             RONI vs. ONI
           </button>
 
         </div>
 
         <figure class="figure-frame"
+                id="enso-figure-panel"
                 role="tabpanel"
-                id="figure-panel"
-                aria-labelledby="tab-current">
+                aria-labelledby="enso-tab-current">
 
-          <img id="figure-image"
+          <img id="enso-figure-image"
                src="./figures/enso_current_conditions.svg"
-               alt="Recent evolution of RONI and Niño 3.4 anomalies"
+               alt="ENSO current conditions"
                loading="lazy">
 
           <div class="figure-footer">
 
-            <figcaption id="figure-caption">
-              Recent evolution of the RONI and monthly
-              Niño 3.4 SST anomalies.
+            <figcaption id="enso-figure-caption">
+              Recent evolution of RONI and Niño 3.4
+              SST anomalies.
             </figcaption>
 
-            <a id="figure-link"
+            <a id="enso-figure-link"
                href="./figures/enso_current_conditions.svg"
+               target="_blank"
+               rel="noopener noreferrer">
+              Open full figure ↗
+            </a>
+
+          </div>
+        </figure>
+
+      </div>
+
+    </section>
+
+
+    <!-- QBO -->
+
+    <section class="content-section shell" id="qbo">
+
+      <div class="section-heading">
+        <div>
+          <p class="eyebrow">03 / Equatorial stratosphere</p>
+          <h2>Quasi-Biennial Oscillation</h2>
+          <p>
+            Alternating easterly and westerly wind regimes
+            in the equatorial stratosphere, characterized
+            by their downward propagation over time.
+          </p>
+        </div>
+      </div>
+
+      <div class="module-top">
+
+        <div class="module-head">
+          <div>
+            <h3>Current QBO indices</h3>
+            <p>
+              Monthly mean equatorial zonal winds
+              at 30 and 50 hPa.
+            </p>
+          </div>
+
+          <span class="source-pill">
+            NOAA CPC · CORe
+          </span>
+        </div>
+
+        <div class="metrics two">
+
+          <div class="metric">
+
+            <div class="metric-label">
+              QBO · 30 hPa
+            </div>
+
+            <div class="metric-number" id="metric-qbo30">—</div>
+
+            <div class="metric-period" id="period-qbo30">—</div>
+
+            <div class="metric-regime" id="regime-qbo30">—</div>
+
+          </div>
+
+          <div class="metric">
+
+            <div class="metric-label">
+              QBO · 50 hPa
+            </div>
+
+            <div class="metric-number" id="metric-qbo50">—</div>
+
+            <div class="metric-period" id="period-qbo50">—</div>
+
+            <div class="metric-regime" id="regime-qbo50">—</div>
+
+          </div>
+
+        </div>
+
+        <p class="reading-note">
+          <strong>Interpretation:</strong>
+          Positive zonal winds are westerly (eastward);
+          negative winds are easterly (westward).
+          Wind direction at one level does not represent
+          the full vertical structure of the QBO.
+        </p>
+
+        <p class="reading-note" id="qbo-profile-date">
+          Latest available Singapore vertical profile: —
+        </p>
+
+      </div>
+
+      <div class="figures" id="qbo-figures">
+
+        <h3>QBO scientific figures</h3>
+
+        <p class="figures-description">
+          Examine recent wind variations, the historical record,
+          and the downward propagation of stratospheric
+          wind regimes.
+        </p>
+
+        <div class="tabs"
+             role="tablist"
+             aria-label="QBO figure selection"
+             data-mode="qbo">
+
+          <button class="tab"
+                  type="button"
+                  role="tab"
+                  id="qbo-tab-current"
+                  aria-controls="qbo-figure-panel"
+                  aria-selected="true"
+                  data-figure="current">
+            Current conditions
+          </button>
+
+          <button class="tab"
+                  type="button"
+                  role="tab"
+                  id="qbo-tab-historical"
+                  aria-controls="qbo-figure-panel"
+                  aria-selected="false"
+                  data-figure="historical"
+                  tabindex="-1">
+            Historical evolution
+          </button>
+
+          <button class="tab"
+                  type="button"
+                  role="tab"
+                  id="qbo-tab-vertical"
+                  aria-controls="qbo-figure-panel"
+                  aria-selected="false"
+                  data-figure="vertical"
+                  tabindex="-1">
+            Time–height evolution
+          </button>
+
+        </div>
+
+        <figure class="figure-frame"
+                id="qbo-figure-panel"
+                role="tabpanel"
+                aria-labelledby="qbo-tab-current">
+
+          <img id="qbo-figure-image"
+               src="./figures/qbo_current_conditions.svg"
+               alt="QBO current conditions at 30 and 50 hPa"
+               loading="lazy">
+
+          <div class="figure-footer">
+
+            <figcaption id="qbo-figure-caption">
+              Recent evolution of equatorial zonal winds
+              at 30 and 50 hPa.
+            </figcaption>
+
+            <a id="qbo-figure-link"
+               href="./figures/qbo_current_conditions.svg"
                target="_blank"
                rel="noopener noreferrer">
               Open full figure ↗
@@ -1023,6 +1179,7 @@
         </figure>
 
       </div>
+
     </section>
 
 
@@ -1035,8 +1192,8 @@
           <p class="eyebrow">04 / Transparency</p>
           <h2>Data &amp; methods</h2>
           <p>
-            Source information and methodological notes
-            for the ENSO module.
+            Documentation of observational sources,
+            index definitions, and update procedures.
           </p>
         </div>
       </div>
@@ -1044,60 +1201,95 @@
       <div class="info-grid">
 
         <div class="info-card">
-          <h3>Indices and definitions</h3>
-
-          <ul>
-            <li>
-              <strong>RONI:</strong>
-              relative Niño 3.4 SST anomaly, adjusted for
-              differences in variability and averaged
-              over three overlapping months.
-            </li>
-
-            <li>
-              <strong>Niño 3.4:</strong>
-              conventional monthly SST anomaly averaged
-              over the central equatorial Pacific
-              Niño 3.4 region.
-            </li>
-
-            <li>
-              <strong>ONI:</strong>
-              three-month running mean of the conventional
-              Niño 3.4 SST anomaly, using NOAA's moving
-              climatological reference.
-            </li>
-          </ul>
-        </div>
-
-        <div class="info-card">
-          <h3>Sources and update frequency</h3>
+          <h3>ENSO</h3>
 
           <p>
-            ENSO indices are obtained from the
+            The Relative Oceanic Niño Index (RONI)
+            measures tropical Pacific SST variability
+            relative to tropical-ocean conditions,
+            with a variance adjustment.
+          </p>
+
+          <p>
+            Conventional Niño 3.4 and ONI observations
+            are provided for comparison.
+            Three-month indices are assigned to
+            the central month of each overlapping season.
+          </p>
+
+          <p>
+            Source:
             <a href="https://www.cpc.ncep.noaa.gov/data/indices/"
                target="_blank"
                rel="noopener noreferrer">
               NOAA Climate Prediction Center
-            </a>
-            and updated monthly when new observations
-            are available.
+            </a>.
+          </p>
+        </div>
+
+        <div class="info-card">
+          <h3>QBO</h3>
+
+          <p>
+            The QBO is monitored using monthly mean
+            equatorial zonal winds at 30 and 50 hPa
+            from NOAA CPC.
           </p>
 
           <p>
-            RONI and ONI are displayed using the central month
-            of each overlapping three-month season.
-            Figures are generated from the same archived
-            series used by this website.
+            Time–height visualizations use the
+            Singapore radiosonde record maintained by
+            KIT, continuing the historical FU Berlin series.
+            These observations are a separate dataset
+            and may differ from the NOAA indices.
           </p>
 
           <p>
-            This monitor describes observed climate variability.
-            It does not provide an independent ENSO forecast.
+            Sources:
+            <a href="https://www.cpc.ncep.noaa.gov/data/indices/"
+               target="_blank"
+               rel="noopener noreferrer">NOAA CPC</a>
+            and
+            <a href="https://www.atmohub.kit.edu/english/807.php"
+               target="_blank"
+               rel="noopener noreferrer">KIT</a>.
+          </p>
+        </div>
+
+        <div class="info-card">
+          <h3>Monthly updates</h3>
+
+          <p>
+            Climate indices and figures are updated monthly,
+            subject to the availability of new observations.
+            Each indicator retains its original observation date.
+          </p>
+
+          <p>
+            Published visualizations are generated from
+            the datasets archived with this project.
+          </p>
+        </div>
+
+        <div class="info-card">
+          <h3>Scientific interpretation</h3>
+
+          <p>
+            Climate indices describe selected aspects
+            of large-scale variability.
+            They are not direct forecasts of regional
+            temperature, precipitation, or extreme events.
+          </p>
+
+          <p>
+            The monitor is intended for scientific
+            visualization and climate information,
+            rather than operational forecasting.
           </p>
         </div>
 
       </div>
+
     </section>
 
   </main>
@@ -1106,6 +1298,7 @@
   <!-- Footer -->
 
   <footer class="footer">
+
     <div class="shell footer-inner">
 
       <p>
@@ -1125,6 +1318,7 @@
       </p>
 
     </div>
+
   </footer>
 
 
@@ -1132,132 +1326,182 @@
     "use strict";
 
     // --------------------------------------------------------
-    // ENSO scientific figures
+    // Scientific figure definitions
     // --------------------------------------------------------
 
-    const figures = {
-      current: {
-        src: "./figures/enso_current_conditions.svg",
-        alt: "Recent evolution of RONI and Niño 3.4 SST anomalies",
-        caption: "Recent evolution of the RONI and monthly Niño 3.4 SST anomalies."
+    const FIGURES = {
+
+      enso: {
+        current: {
+          src: "./figures/enso_current_conditions.svg",
+          alt: "Recent evolution of RONI and Niño 3.4",
+          caption: "Recent RONI and monthly Niño 3.4 SST anomalies."
+        },
+
+        historical: {
+          src: "./figures/enso_historical_evolution.svg",
+          alt: "Historical evolution of RONI",
+          caption: "Historical RONI variability since 1950."
+        },
+
+        comparison: {
+          src: "./figures/enso_roni_vs_oni.svg",
+          alt: "Historical comparison of RONI and ONI",
+          caption: "RONI and ONI historical evolution and differences."
+        }
       },
 
-      historical: {
-        src: "./figures/enso_historical_evolution.svg",
-        alt: "Historical RONI time series and detail of the last 20 years",
-        caption: "Historical RONI variability, including a closer view of the last 20 years."
-      },
+      qbo: {
+        current: {
+          src: "./figures/qbo_current_conditions.svg",
+          alt: "QBO current conditions at 30 and 50 hPa",
+          caption: "Recent equatorial zonal winds at 30 and 50 hPa."
+        },
 
-      comparison: {
-        src: "./figures/enso_roni_vs_oni.svg",
-        alt: "Historical comparison of RONI and ONI and their difference",
-        caption: "Historical comparison of RONI and ONI, including RONI minus ONI."
+        historical: {
+          src: "./figures/qbo_historical_evolution.svg",
+          alt: "Historical QBO zonal winds since 1979",
+          caption: "Historical monthly zonal winds at 30 and 50 hPa."
+        },
+
+        vertical: {
+          src: "./figures/qbo_time_height.svg",
+          alt: "QBO time-height evolution and latest vertical profile",
+          caption: "Time–height evolution of Singapore radiosonde winds and the latest vertical profile."
+        }
       }
     };
 
 
     // --------------------------------------------------------
-    // Figure selection
+    // Helper functions
     // --------------------------------------------------------
-
-    document.querySelectorAll("[data-figure]").forEach(button => {
-
-      button.addEventListener("click", () => {
-
-        const key = button.dataset.figure;
-        const figure = figures[key];
-
-        document.querySelectorAll("[data-figure]").forEach(tab => {
-          tab.setAttribute(
-            "aria-selected",
-            String(tab === button)
-          );
-
-          tab.tabIndex = tab === button ? 0 : -1;
-        });
-
-        const panel = document.getElementById("figure-panel");
-
-        panel.setAttribute(
-          "aria-labelledby",
-          button.id
-        );
-
-        const image = document.getElementById("figure-image");
-
-        image.src = figure.src;
-        image.alt = figure.alt;
-
-        document.getElementById("figure-caption").textContent =
-          figure.caption;
-
-        document.getElementById("figure-link").href =
-          figure.src;
-
-      });
-
-    });
-
-
-    // Keyboard navigation for figure tabs
-
-    const tabs = Array.from(
-      document.querySelectorAll("[data-figure]")
-    );
-
-    tabs.forEach((tab, index) => {
-
-      tab.tabIndex = index === 0 ? 0 : -1;
-
-      tab.addEventListener("keydown", event => {
-
-        if (
-          event.key !== "ArrowRight" &&
-          event.key !== "ArrowLeft"
-        ) {
-          return;
-        }
-
-        event.preventDefault();
-
-        const step = event.key === "ArrowRight" ? 1 : -1;
-
-        const next = tabs[
-          (index + step + tabs.length) % tabs.length
-        ];
-
-        next.focus();
-        next.click();
-
-      });
-
-    });
-
-
-    // --------------------------------------------------------
-    // Formatting
-    // --------------------------------------------------------
-
-    function formatValue(value) {
-      return `${value >= 0 ? "+" : ""}${value.toFixed(2)} °C`;
-    }
 
     function setText(id, value) {
       document.getElementById(id).textContent = value;
     }
 
+    function formatValue(value, unit) {
+      return `${value >= 0 ? "+" : ""}${value.toFixed(2)} ${unit}`;
+    }
+
+    function metricColor(value) {
+      if (value > 0) return "#c64b4b";
+      if (value < 0) return "#24658a";
+      return "#66798b";
+    }
+
+    async function getJSON(path) {
+
+      const response = await fetch(path, {
+        cache: "no-store"
+      });
+
+      if (!response.ok) {
+        throw new Error(`${path}: HTTP ${response.status}`);
+      }
+
+      return response.json();
+    }
+
 
     // --------------------------------------------------------
-    // Draw RONI sparkline
+    // Independent scientific figure selectors
+    // --------------------------------------------------------
+
+    document.querySelectorAll(".tabs[data-mode]").forEach(group => {
+
+      const mode = group.dataset.mode;
+      const buttons = Array.from(
+        group.querySelectorAll("[data-figure]")
+      );
+
+      buttons.forEach((button, index) => {
+
+        button.tabIndex = index === 0 ? 0 : -1;
+
+        button.addEventListener("click", () => {
+
+          const key = button.dataset.figure;
+          const figure = FIGURES[mode][key];
+
+          for (const tab of buttons) {
+            const active = tab === button;
+
+            tab.setAttribute(
+              "aria-selected",
+              String(active)
+            );
+
+            tab.tabIndex = active ? 0 : -1;
+          }
+
+          const panel = document.getElementById(
+            `${mode}-figure-panel`
+          );
+
+          panel.setAttribute(
+            "aria-labelledby",
+            button.id
+          );
+
+          const image = document.getElementById(
+            `${mode}-figure-image`
+          );
+
+          image.src = figure.src;
+          image.alt = figure.alt;
+
+          setText(
+            `${mode}-figure-caption`,
+            figure.caption
+          );
+
+          document.getElementById(
+            `${mode}-figure-link`
+          ).href = figure.src;
+
+        });
+
+        button.addEventListener("keydown", event => {
+
+          if (
+            event.key !== "ArrowRight" &&
+            event.key !== "ArrowLeft"
+          ) {
+            return;
+          }
+
+          event.preventDefault();
+
+          const step = event.key === "ArrowRight" ? 1 : -1;
+
+          const next = buttons[
+            (index + step + buttons.length) % buttons.length
+          ];
+
+          next.focus();
+          next.click();
+
+        });
+
+      });
+
+    });
+
+
+    // --------------------------------------------------------
+    // RONI sparkline
     // --------------------------------------------------------
 
     function drawSparkline(history) {
 
       const svg = document.getElementById("roni-spark");
 
-      const values = history
-        .map(item => Number(item.value))
-        .filter(Number.isFinite);
+      const values = history.map(item => ({
+        date: item.date,
+        value: Number(item.value)
+      })).filter(item => Number.isFinite(item.value));
 
       if (values.length < 2) {
         return;
@@ -1267,112 +1511,100 @@
       const h = 98;
       const pad = 8;
 
-      const low = Math.min(-0.5, ...values) - 0.2;
-      const high = Math.max(0.5, ...values) + 0.2;
+      const numbers = values.map(item => item.value);
+
+      const low = Math.min(-0.5, ...numbers) - 0.2;
+      const high = Math.max(0.5, ...numbers) + 0.2;
 
       const x = i =>
         pad + i * (w - 2 * pad) / (values.length - 1);
 
       const y = v =>
-        h - pad - (v - low) * (h - 2 * pad) / (high - low);
+        h - pad - (v - low) *
+        (h - 2 * pad) / (high - low);
 
       const ns = "http://www.w3.org/2000/svg";
 
-      const line = (points, color, width, dash) => {
-
-        const element = document.createElementNS(
-          ns, "polyline"
-        );
-
-        element.setAttribute("points", points);
-        element.setAttribute("fill", "none");
-        element.setAttribute("stroke", color);
-        element.setAttribute("stroke-width", width);
-
-        if (dash) {
-          element.setAttribute("stroke-dasharray", dash);
-        }
-
-        svg.appendChild(element);
-      };
-
       svg.replaceChildren();
 
-      line(
-        `0,${y(0)} ${w},${y(0)}`,
-        "#dbe5eb",
-        1,
-        "4 4"
+      const zero = document.createElementNS(
+        ns, "line"
       );
 
-      line(
-        values
-          .map((v, i) => `${x(i)},${y(v)}`)
-          .join(" "),
-        "#1d668e",
-        2.8
+      zero.setAttribute("x1", 0);
+      zero.setAttribute("x2", w);
+      zero.setAttribute("y1", y(0));
+      zero.setAttribute("y2", y(0));
+      zero.setAttribute("stroke", "#dbe5eb");
+      zero.setAttribute("stroke-dasharray", "4 4");
+
+      svg.appendChild(zero);
+
+      const curve = document.createElementNS(
+        ns, "polyline"
       );
 
-      const point = document.createElementNS(
+      curve.setAttribute(
+        "points",
+        numbers.map(
+          (value, i) => `${x(i)},${y(value)}`
+        ).join(" ")
+      );
+
+      curve.setAttribute("fill", "none");
+      curve.setAttribute("stroke", "#1d668e");
+      curve.setAttribute("stroke-width", "2.8");
+      curve.setAttribute("stroke-linejoin", "round");
+
+      svg.appendChild(curve);
+
+      const last = numbers[numbers.length - 1];
+
+      const marker = document.createElementNS(
         ns, "circle"
       );
 
-      const latest = values[values.length - 1];
+      marker.setAttribute("cx", x(numbers.length - 1));
+      marker.setAttribute("cy", y(last));
+      marker.setAttribute("r", 4.3);
 
-      const pointColor =
-        latest >= 0.5 ? "#c64b4b" :
-        latest <= -0.5 ? "#24658a" :
-        "#66798b";
+      marker.setAttribute(
+        "fill",
+        last >= 0.5 ? "#c64b4b" :
+        last <= -0.5 ? "#24658a" :
+        "#66798b"
+      );
 
-      point.setAttribute("cx", x(values.length - 1));
-      point.setAttribute("cy", y(latest));
-      point.setAttribute("r", "4.3");
-      point.setAttribute("fill", pointColor);
-
-      svg.appendChild(point);
+      svg.appendChild(marker);
     }
 
 
     // --------------------------------------------------------
-    // Load current ENSO observations
+    // Load ENSO
     // --------------------------------------------------------
 
-    async function loadIndices() {
+    async function loadENSO() {
 
       try {
 
-        const response = await fetch(
-          "./data/enso_status.json",
-          { cache: "no-store" }
+        const payload = await getJSON(
+          "./data/enso_status.json"
         );
 
-        if (!response.ok) {
-          throw new Error(`HTTP ${response.status}`);
-        }
-
-        const payload = await response.json();
-
-        const {
-          roni,
-          nino34,
-          oni
-        } = payload.metrics;
+        const { roni, nino34, oni } = payload.metrics;
 
         for (const metric of [roni, nino34, oni]) {
-
           if (
             !Number.isFinite(metric.value) ||
             !metric.period
           ) {
-            throw new Error("Invalid metric data");
+            throw new Error("Invalid ENSO metric");
           }
         }
 
-        // Hero
-
         setText(
           "hero-roni",
-          formatValue(roni.value)
+          formatValue(roni.value, "°C")
         );
 
         setText(
@@ -1380,19 +1612,15 @@
           `Latest season: ${roni.period}`
         );
 
-        // ENSO overview card
-
         setText(
           "overview-roni",
-          formatValue(roni.value)
+          formatValue(roni.value, "°C")
         );
 
         setText(
-          "overview-period",
+          "overview-enso-period",
           `RONI · ${roni.period}`
         );
-
-        // Scientific index cards
 
         for (
           const [key, metric] of
@@ -1401,54 +1629,49 @@
 
           setText(
             `metric-${key}`,
-            formatValue(metric.value)
+            formatValue(metric.value, "°C")
           );
 
           setText(
             `period-${key}`,
             metric.period
           );
-
         }
 
-        // Reference-threshold interpretation
+        let condition;
 
-        const condition =
-          roni.value >= 0.5
-            ? "RONI above the +0.5 °C reference threshold. This alone is not an ENSO episode diagnosis."
-            : roni.value <= -0.5
-              ? "RONI below the −0.5 °C reference threshold. This alone is not an ENSO episode diagnosis."
-              : "RONI between the ±0.5 °C reference thresholds. This alone does not establish ENSO phase.";
+        if (roni.value >= 0.5) {
+          condition =
+            "RONI is above the +0.5 °C reference threshold. An ENSO episode diagnosis also requires persistence and atmospheric evidence.";
+        } else if (roni.value <= -0.5) {
+          condition =
+            "RONI is below the −0.5 °C reference threshold. An ENSO episode diagnosis also requires persistence and atmospheric evidence.";
+        } else {
+          condition =
+            "RONI is between the ±0.5 °C reference thresholds. This alone does not establish ENSO phase.";
+        }
 
-        setText(
-          "roni-condition",
-          condition
-        );
-
-        // Last 36 observations
+        setText("roni-condition", condition);
 
         drawSparkline(roni.history);
 
       } catch (error) {
 
-        console.error(
-          "Unable to load ENSO data:",
-          error
-        );
+        console.error("ENSO data error:", error);
 
         setText(
           "hero-period",
-          "Latest data currently unavailable"
+          "ENSO observations unavailable"
         );
 
         setText(
-          "overview-period",
+          "overview-enso-period",
           "Data unavailable"
         );
 
         setText(
           "roni-condition",
-          "Please check that the ENSO JSON file has been generated and published."
+          "Unable to load the latest ENSO observations."
         );
 
       }
@@ -1456,10 +1679,121 @@
 
 
     // --------------------------------------------------------
-    // Initialize
+    // Load QBO
     // --------------------------------------------------------
 
-    loadIndices();
+    async function loadQBO() {
+
+      try {
+
+        const payload = await getJSON(
+          "./data/qbo_status.json"
+        );
+
+        const u30 = payload.metrics.qbo_u30;
+        const u50 = payload.metrics.qbo_u50;
+
+        for (const metric of [u30, u50]) {
+
+          if (
+            !Number.isFinite(metric.value) ||
+            !metric.period ||
+            !metric.wind_regime_at_level
+          ) {
+            throw new Error("Invalid QBO metric");
+          }
+
+        }
+
+        // Overview card
+
+        setText(
+          "overview-qbo",
+          formatValue(u30.value, "m/s")
+        );
+
+        setText(
+          "overview-qbo-period",
+          `${u30.wind_regime_at_level} at 30 hPa · ${u30.period}`
+        );
+
+        // QBO metrics
+
+        const metrics = [
+          ["qbo30", u30],
+          ["qbo50", u50]
+        ];
+
+        for (const [key, metric] of metrics) {
+
+          const valueElement = document.getElementById(
+            `metric-${key}`
+          );
+
+          valueElement.textContent = formatValue(
+            metric.value,
+            "m/s"
+          );
+
+          valueElement.style.color = metricColor(
+            metric.value
+          );
+
+          setText(
+            `period-${key}`,
+            metric.period
+          );
+
+          const regimeElement = document.getElementById(
+            `regime-${key}`
+          );
+
+          regimeElement.textContent =
+            metric.wind_regime_at_level.toUpperCase();
+
+          regimeElement.style.color = metricColor(
+            metric.value
+          );
+
+        }
+
+        // Singapore profile date
+
+        const profile = payload.vertical_profile;
+
+        if (profile && profile.period) {
+
+          setText(
+            "qbo-profile-date",
+            `Latest available Singapore vertical profile: ${profile.period} (KIT / FU Berlin).`
+          );
+
+        }
+
+      } catch (error) {
+
+        console.error("QBO data error:", error);
+
+        setText(
+          "overview-qbo-period",
+          "QBO observations unavailable"
+        );
+
+        setText(
+          "qbo-profile-date",
+          "Singapore vertical profile information unavailable."
+        );
+
+      }
+    }
+
+
+    // --------------------------------------------------------
+    // Initialize independent modules
+    // --------------------------------------------------------
+
+    loadENSO();
+    loadQBO();
 
   </script>
 
