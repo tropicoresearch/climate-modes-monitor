@@ -28,3 +28,4 @@ venv/
 
 # Cached ERSSTv6 monthly fields for PDO regression
 data/pdo/raw/ersst_v6/
+data/amv/raw/ersst_v6/
